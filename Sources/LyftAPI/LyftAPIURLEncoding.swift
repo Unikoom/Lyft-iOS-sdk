@@ -29,7 +29,8 @@ func lyftURLEncodedInURL(request: URLRequest, parameters: [String: Any]?) -> (UR
         .flatMap { components(forKey: $0, value: $1) }
 
     var urlComponents = URLComponents(url: mutableURLRequest.url!, resolvingAgainstBaseURL: false)
-    urlComponents?.queryItems?.append(contentsOf: queryItems)
+    let items = (urlComponents?.queryItems ?? []) + queryItems
+    urlComponents?.queryItems = items
     mutableURLRequest.url = urlComponents?.url
     return (mutableURLRequest, nil)
 }
